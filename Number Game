@@ -1,0 +1,63 @@
+import java.util.*;
+public class Main
+{       static int score=0;
+        public static void main(String[] args)
+        {
+            Game();
+        }
+        public static void Game()
+        {
+
+        Scanner s=new Scanner(System.in);
+   System.out.print("Enter the limit(in Integer):");
+   int limit=s.nextInt();
+   
+   Random rand = new Random();
+   int random_no=rand.nextInt(limit);
+   
+   System.out.print("Enter the number of tries:");
+   int tries;
+   tries=s.nextInt();
+   int Try=1;
+   int count=tries-1;
+ 
+   int guess;
+   System.out.print("Enter your guess:");
+   guess=s.nextInt();
+   
+   while( Try<tries )
+   {
+       if(random_no==guess)
+       {
+           break;
+       }
+       System.out.println("Try again(You have "+count+" guesses left)");
+       guess=s.nextInt();
+       Try++;
+       count--;
+   }
+   
+   
+   if(random_no==guess)
+       {    score++;
+           System.out.println("You have guessed correctly.");
+       }
+        else{
+                System.out.println("SORRY,You have failed.");
+        }
+       
+        char retry;
+        System.out.print("Do you want play again(y/n):");
+        retry=s.next().charAt(0);
+       
+        while(retry=='y')
+        {
+            Game();
+        }
+       
+        System.out.println("Well Played... \nThanks for playing");
+        System.out.println("Your score is "+score);
+        System.exit(0);
+
+        }
+}
