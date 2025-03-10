@@ -1,96 +1,41 @@
-class BankAccount {
-    private double balance;
+import java.util.Scanner;
 
-    public BankAccount(double initialBalance) {
-        this.balance = initialBalance;
-    }
-
-    public void deposit(double amount) {
-        if (amount > 0) {
-            balance += amount;
-            System.out.println("Amount deposited successfully. New balance: " + balance);
-        } else {
-            System.out.println("Invalid deposit amount.");
-        }
-    }
-
-    public void withdraw(double amount) {
-        if (amount > 0 && amount <= balance) {
-            balance -= amount;
-            System.out.println("Amount withdrawn successfully. New balance: " + balance);
-        } else if (amount > balance) {
-            System.out.println("Insufficient balance.");
-        } else {
-            System.out.println("Invalid withdrawal amount.");
-        }
-    }
-
-    public double checkBalance() {
-        return balance;
-    }
-}
-
-class ATM {
-    private BankAccount account;
-
-    public ATM(BankAccount account) {
-        this.account = account;
-    }
-
-    public void showMenu() {
-        System.out.println("Welcome to the ATM");
-        System.out.println("1. Deposit");
-        System.out.println("2. Withdraw");
-        System.out.println("3. Check Balance");
-        System.out.println("4. Exit");
-    }
-
-    public void processOption(int option, double amount) {
-        switch (option) {
-            case 1:
-                account.deposit(amount);
-                break;
-            case 2:
-                account.withdraw(amount);
-                break;
-            case 3:
-                System.out.println("Your balance is: " + account.checkBalance());
-                break;
-            case 4:
-                System.out.println("Exiting. Thank you for using the ATM.");
-                break;
-            default:
-                System.out.println("Invalid option. Please try again.");
-        }
-    }
-}
-
-public class ATMInterface {
+public class BankingSystem {
     public static void main(String[] args) {
-        BankAccount account = new BankAccount(1000);
-        ATM atm = new ATM(account);
-
-        java.util.Scanner scanner = new java.util.Scanner(System.in);
-        boolean exit = false;
-
-        while (!exit) {
-            atm.showMenu();
-            System.out.print("Choose an option: ");
-            int option = scanner.nextInt();
-            double amount = 0;
-
-            if (option == 1 || option == 2) {
-                System.out.print("Enter amount: ");
-                amount = scanner.nextDouble();
-            }
-
-            atm.processOption(option, amount);
-
-            if (option == 4) {
-                exit = true;
+        double balance = 5000;  // Initial balance
+        Scanner sc = new Scanner(System.in);
+        
+        while (true) {
+            System.out.println("\n1. Check Balance\n2. Deposit\n3. Withdraw\n4. Exit");
+            int choice = sc.nextInt();
+            
+            switch (choice) {
+                case 1:
+                    System.out.println("Current Balance: $" + balance);
+                    break;
+                case 2:
+                    System.out.print("Enter deposit amount: ");
+                    double deposit = sc.nextDouble();
+                    balance += deposit;
+                    System.out.println("Deposited Successfully!");
+                    break;
+                case 3:
+                    System.out.print("Enter withdrawal amount: ");
+                    double withdraw = sc.nextDouble();
+                    if (withdraw <= balance) {
+                        balance -= withdraw;
+                        System.out.println("Withdrawal Successful!");
+                    } else {
+                        System.out.println("Insufficient balance!");
+                    }
+                    break;
+                case 4:
+                    System.out.println("Thank you for banking with us!");
+                    sc.close();
+                    return;
+                default:
+                    System.out.println("Invalid choice! Try again.");
             }
         }
-
-        scanner.close();
     }
 }
